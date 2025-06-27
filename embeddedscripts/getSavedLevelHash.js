@@ -1,3 +1,4 @@
+//CREDIT (mrmasterplan): https://github.com/mrmasterplan/rwklevelfiles/blob/main/docs/WEB.md
 var dbRequest = indexedDB.open("/RAPTISOFT_SANDBOX", 21);
 
     dbRequest.onsuccess = function (event) {
@@ -10,7 +11,7 @@ var dbRequest = indexedDB.open("/RAPTISOFT_SANDBOX", 21);
             if (request.result) {
                 console.log("Put this into a .kitty.b64:", uint8ArrayToBase64(request.result.
                     contents));
-                window.electronAPI.sendKittyData(uint8ArrayToBase64(request.result.contents));
+                window.electronAPI.printToAppConsole(uint8ArrayToBase64(request.result.contents));
             } else {
                 console.log("No data found for the key");
             }

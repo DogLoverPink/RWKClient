@@ -1,4 +1,4 @@
-const { app, Menu, BrowserWindow, ipcRenderer, ipcMain, session } = require('electron');
+const { app, Menu, BrowserWindow, ipcMain, session } = require('electron');
 const { ElectronBlocker } = require('@cliqz/adblocker-electron');
 const fetch = require('cross-fetch');
 const path = require('path');
@@ -34,6 +34,14 @@ function printLevelHash() {
     getLevelInfo();
 }
 
+function printSavedLevelNames() {
+    const scriptPath = path.join(__dirname, 'embeddedscripts/getSavedLevelNames.js');
+    const scriptCode = fs.readFileSync(scriptPath, 'utf-8');
+    console.log("START EXECUTE JAVASCRIPT:");
+    win.webContents.executeJavaScript(scriptCode);
+    console.log("END EXECUTE JAVASCRIPT:");
+}
+
 
 
 function createMenuToolBar() {
@@ -41,9 +49,23 @@ function createMenuToolBar() {
         {
             label: 'File',
             submenu: [
-                { label: 'Get Level Hash', click: printLevelHash },
                 { type: 'separator' },
                 { label: 'Exit', role: 'quit' },
+            ],
+        },
+        {
+            label: 'Level',
+            submenu: [
+                { label: 'Copy Level (WIP)', click: () => console.log("not implemented!") },
+                { label: 'Paste Level (WIP)', click: () => console.log("not implemented!") },
+            ],
+        },
+        {
+            label: 'Editor',
+            submenu: [
+                { label: 'Get Current Level Hash', click: printLevelHash },
+                { label: 'Get Saved Level Names', click: printSavedLevelNames },
+                { type: 'separator' },
             ],
         },
         {
@@ -66,13 +88,18 @@ function createMenuToolBar() {
     Menu.setApplicationMenu(menu);
 }
 
-ipcMain.on("kitty-data", (event, data) => {
-    console.log("Got kitty data from renderer:", data);
+ipcMain.on("printMessage", (event, data) => {
+    try {
+        const parsed = JSON.parse(data);
+        console.log("Got kitty data from renderer:", parsed);
+    } catch {
+        console.log("Got kitty data from renderer:", data);
+    }
 });
 
 function getLevelInfo() {
 
-    const scriptPath = path.join(__dirname, 'embeddedscripts/getCurrentLevelHash.js');
+    const scriptPath = path.join(__dirname, 'embeddedscripts/getSavedLevelHash.js');
     const scriptCode = fs.readFileSync(scriptPath, 'utf-8');
     win.webContents.executeJavaScript(scriptCode);
 }

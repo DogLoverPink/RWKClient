@@ -1,6 +1,9 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer} = require('electron');
 
-console.log("PRELOADING STUFFS");
+
 contextBridge.exposeInMainWorld('electronAPI', {
-  sendKittyData: (data) => ipcRenderer.send('kitty-data', data),
+  printToAppConsole: (data) => {
+    console.log("sending :"+typeof data);
+    ipcRenderer.send('printMessage', typeof data === 'string' ? data : JSON.stringify(data));
+  },
 });
