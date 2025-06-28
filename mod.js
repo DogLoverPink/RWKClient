@@ -27,13 +27,18 @@ app.whenReady().then(async () => {
         }
     });
     storage.window = win;
-    storage.runEmbeddedScripts.apply();
     
 
     storage.menu = Menu;
     menuBar.createMenuToolBar();
 
     win.loadURL('http://127.0.0.1:8080/');
+});
+
+ipcMain.on('preload-finished', () => {
+    console.log("finished poreload");
+  storage.runEmbeddedScripts();
+  menuBar.populateSavedLevelNames();
 });
 
 

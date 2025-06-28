@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer} = require('electron');
+const {storage} = require("../src/StaticMembers");
 
 
 contextBridge.exposeInMainWorld('electronAPI', {
@@ -13,3 +14,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   sendCustomIPC: (ipcSignalName, data) => ipcRenderer.send(ipcSignalName, data),
 });
+
+ipcRenderer.send('preload-finished');

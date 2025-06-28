@@ -51,16 +51,17 @@ function updateCopyLevelMenu(newLevels) {
   storage.menu.setApplicationMenu(menu);
 }
 
+
 function duplicateLevel(name) {
     console.log("Copying level:", name);
     storage.window.webContents.send('getLevelHash', name, false, "printCurrentLevelName");
-    // storage.window.webContents.send('duplicateLevel', name);
 }
 
 
 ipcMain.on("printCurrentLevelName", (event, data) => {
     var level = new levelThing.Level;
     const buf = Buffer.from(data, "base64");
+    console.log("recieved ping!");
     
     level.deserialize(buf, 1);
     console.log("namey before: "+level.name);

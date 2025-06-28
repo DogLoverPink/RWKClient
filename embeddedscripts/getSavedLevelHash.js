@@ -1,5 +1,7 @@
 //CREDIT (mrmasterplan): https://github.com/mrmasterplan/rwklevelfiles/blob/main/docs/WEB.md
+console.log("LOADING HASHGETTER");
 window.electronAPI.getLevelHash((event, levelName, getCurrentLevel, ipcCallbackName) => {
+    console.log("STARTING HASH REQUEST");
     var dbRequest = indexedDB.open("/RAPTISOFT_SANDBOX", 21);
 
     dbRequest.onsuccess = function (event) {
@@ -11,7 +13,7 @@ window.electronAPI.getLevelHash((event, levelName, getCurrentLevel, ipcCallbackN
             path = "/RAPTISOFT_SANDBOX/RWK/downloaded.kitty";
         }
         var request = objectStore.get(path); // Replace with your key
-
+        console.log("Halfway HASH REQUEST");
         request.onsuccess = function () {
             if (request.result) {
                 console.log("Put this into a .kitty.b64:", uint8ArrayToBase64(request.result.

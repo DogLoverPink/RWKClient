@@ -7,8 +7,11 @@ function test() {
     console.log("rgdfgdfgdfg");
 }
 
-function createMenuToolBar() {
+function populateSavedLevelNames() {
     printSavedLevelNames.apply();
+}
+
+function createMenuToolBar() {
     const template = [
         {
             label: 'File',
@@ -61,4 +64,4 @@ function meowTest() {
 }
 
 
-module.exports = { createMenuToolBar };
+module.exports = { createMenuToolBar, populateSavedLevelNames };

@@ -10,6 +10,7 @@ module.exports = {
 };
 
 function runEmbeddedScripts() {
+  console.log("preloading!!!");
   let scriptsToPreRun = [
     // "../embeddedscripts/level.js",
     "../embeddedscripts/DuplicateSavedLevel.js",
