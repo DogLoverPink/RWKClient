@@ -1,6 +1,7 @@
 const { printLevelHash, printSavedLevelNames } = require("./LevelMenuBar.js");
 const path = require('path');
 const storage = require('./StaticMembers.js');
+const { ipcMain} = require('electron');
 
 function test() {
     console.log("rgdfgdfgdfg");
@@ -23,7 +24,7 @@ function createMenuToolBar() {
                     submenu: [],
                     click: () => console.log("not implemented!"),
                  },
-                { label: 'Paste Level (WIP)', click: () => console.log("not implemented!") },
+                { label: 'Paste Level (WIP)', click: meowTest },
             ],
         },
         {
@@ -54,5 +55,10 @@ function createMenuToolBar() {
     const menu = storage.menu.buildFromTemplate(template);
     storage.menu.setApplicationMenu(menu);
 }
+
+function meowTest() {
+    console.log("!not im plemented!");    
+}
+
 
 module.exports = { createMenuToolBar };

@@ -11,8 +11,9 @@ module.exports = {
 
 function runEmbeddedScripts() {
   let scriptsToPreRun = [
-    "../embeddedscripts/level.js",
-    "../embeddedscripts/DuplicateSavedLevel.js"
+    // "../embeddedscripts/level.js",
+    "../embeddedscripts/DuplicateSavedLevel.js",
+    "../embeddedscripts/getSavedLevelHash.js",
   ];
   try {
     for (let script of scriptsToPreRun) {

@@ -22,7 +22,8 @@ app.whenReady().then(async () => {
         webPreferences: {
             preload: path.join(__dirname, 'embeddedscripts/preload.js'),
             contextIsolation: true,
-            nodeIntegration: true
+            nodeIntegration: false,
+            sandbox: false
         }
     });
     storage.window = win;
