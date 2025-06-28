@@ -1,4 +1,6 @@
-const { printLevelHash, printSavedLevelNames } = require("./LevelMenuBar.js");
+const { printLevelHash, printSavedLevelNames, copyCurrentLevel } = require("./LevelMenuBar.js");
+const {getLevelSaves, downloadFile, downloadFileList} = require("./FileMenuBar.js");
+const {getCurrentLevelId} = require("./PracticeMenuBar.js");
 const path = require('path');
 const storage = require('./StaticMembers.js');
 const { ipcMain} = require('electron');
@@ -16,6 +18,9 @@ function createMenuToolBar() {
         {
             label: 'File',
             submenu: [
+                { label: 'Export File', click: downloadFile },
+                { label: 'Export File (List)', click: downloadFileList },
+                { label: 'Print File List', click: getLevelSaves },
                 { type: 'separator' },
                 { label: 'Exit', role: 'quit' },
             ],
@@ -25,16 +30,22 @@ function createMenuToolBar() {
             submenu: [
                 { label: 'Duplicate Level', 
                     submenu: [],
-                    click: () => console.log("not implemented!"),
                  },
-                { label: 'Paste Level (WIP)', click: meowTest },
+                { label: 'Download Current Level', click: copyCurrentLevel },
+                { label: 'Refresh Known Levels', click: printSavedLevelNames },
             ],
         },
         {
             label: 'Editor',
             submenu: [
                 { label: 'Get Current Level Hash', click: printLevelHash },
-                { label: 'Get Saved Level Names', click: printSavedLevelNames },
+                { type: 'separator' },
+            ],
+        },
+        {
+            label: 'Practice',
+            submenu: [
+                { label: 'Get Current Level ID', click: getCurrentLevelId },
                 { type: 'separator' },
             ],
         },
@@ -59,9 +70,6 @@ function createMenuToolBar() {
     storage.menu.setApplicationMenu(menu);
 }
 
-function meowTest() {
-    console.log("!not im plemented!");    
-}
 
 
 module.exports = { createMenuToolBar, populateSavedLevelNames };

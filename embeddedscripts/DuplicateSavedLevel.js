@@ -30,17 +30,6 @@ window.electronAPI.duplicateLevel((event, levelName, levelHash) => {
 });
 
 
-function base64ToUint8Array(base64) {
-    const binaryString = atob(base64);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-
-    for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-    }
-
-    return bytes;
-}
 
 function uint8ArrayToBase64(uint8Array) {
     var binaryString = new Uint8Array(uint8Array).reduce((acc, byte) => acc + String.fromCharCode(byte), '');

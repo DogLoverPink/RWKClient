@@ -54,11 +54,15 @@ function updateCopyLevelMenu(newLevels) {
 
 function duplicateLevel(name) {
     console.log("Copying level:", name);
-    storage.window.webContents.send('getLevelHash', name, false, "printCurrentLevelName");
+    storage.window.webContents.send('getLevelHash', name, false, "duplicateNamedLevel");
+}
+
+function copyCurrentLevel() {
+  storage.window.webContents.send('getLevelHash', null, true, "duplicateNamedLevel");
 }
 
 
-ipcMain.on("printCurrentLevelName", (event, data) => {
+ipcMain.on("duplicateNamedLevel", (event, data) => {
     var level = new levelThing.Level;
     const buf = Buffer.from(data, "base64");
     console.log("recieved ping!");
@@ -86,5 +90,6 @@ function incrementString(input) {
 
 module.exports = {
     printLevelHash,
-    printSavedLevelNames
+    printSavedLevelNames,
+    copyCurrentLevel,
 };

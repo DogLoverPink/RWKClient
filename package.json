@@ -15,6 +15,7 @@
     "bitwise": "^2.2.1",
     "buffer": "^6.0.3",
     "cross-fetch": "^4.1.0",
+    "electron-prompt": "^1.7.0",
     "puppeteer": "^24.11.0"
   },
   "devDependencies": {

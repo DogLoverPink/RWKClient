@@ -1,5 +1,4 @@
 //CREDIT (mrmasterplan): https://github.com/mrmasterplan/rwklevelfiles/blob/main/docs/WEB.md
-console.log("LOADING HASHGETTER");
 window.electronAPI.getLevelHash((event, levelName, getCurrentLevel, ipcCallbackName) => {
     console.log("STARTING HASH REQUEST");
     var dbRequest = indexedDB.open("/RAPTISOFT_SANDBOX", 21);

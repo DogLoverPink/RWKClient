@@ -6,6 +6,7 @@ module.exports = {
   app: null,
   menu: null,
   menuTemplate: null,
+  clientFileStorageFolder: null,
   runEmbeddedScripts,
 };
 
@@ -15,6 +16,7 @@ function runEmbeddedScripts() {
     // "../embeddedscripts/level.js",
     "../embeddedscripts/DuplicateSavedLevel.js",
     "../embeddedscripts/getSavedLevelHash.js",
+    "../embeddedscripts/PracticeMode.js",
   ];
   try {
     for (let script of scriptsToPreRun) {
