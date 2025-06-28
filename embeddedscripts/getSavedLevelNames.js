@@ -15,14 +15,8 @@ dbAccess.onsuccess = function () {
         && key !== "/RAPTISOFT_SANDBOX/RWK/EXTRALEVELS64"
     );
     if (window.electronAPI) {
-      var meow = JSON.stringify(rwkKeys);
-      console.log("type: " + typeof meow);
-      try {
-        window.electronAPI.printToAppConsole(meow);
-        console.log("sucess IPC send:");
-      } catch (err) {
-        console.error("IPC send failed:", err);
-      }
+      // window.electronAPI.printToAppConsole(rwkKeys);
+      window.electronAPI.updateUserSavedLevelsList(rwkKeys);
     }
   };
 
