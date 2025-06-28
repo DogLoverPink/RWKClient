@@ -16,6 +16,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getLevelsData: (callback, callbackIPCName) => ipcRenderer.on("getLevelsData", callback, callbackIPCName),
   downloadIndexDBFile: (callback, fileName) => ipcRenderer.on("downloadIndexDBFile", callback, fileName),
   getIndexDBFile: (callback, fileName, ipcCallbackName) => ipcRenderer.on("getIndexDBFile", callback, fileName,ipcCallbackName),
+  writeLevelFile: (callback, filePath, levelContents, timestamp, mode, practiceLevelID) => ipcRenderer.on("writeLevelFile", callback, filePath, levelContents, timestamp, mode, practiceLevelID),
+  getRWKURL: () => ipcRenderer.invoke('get-rwk-url')
 });
 
 

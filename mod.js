@@ -40,8 +40,10 @@ app.whenReady().then(async () => {
     storage.menu = Menu;
     menuBar.createMenuToolBar();
 
-    win.loadURL('http://127.0.0.1:8080/');
+    win.loadURL(storage.RWKURL);
 });
+
+ipcMain.handle('get-rwk-url', () => storage.RWKURL);
 
 
 

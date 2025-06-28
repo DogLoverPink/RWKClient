@@ -1,5 +1,7 @@
 const path = require('path');
 const fs = require('fs');
+const Store = require('electron-store');
+const store = new (Store.default || Store)();
 
 module.exports = {
   window: null,
@@ -7,8 +9,16 @@ module.exports = {
   menu: null,
   menuTemplate: null,
   clientFileStorageFolder: null,
+  persistantStorage: store,
   runEmbeddedScripts,
+  getFileName,
+  RWKURL: "https://www.robotwantskitty.com/web/",
+  // RWKURL: "http://127.0.0.1:8080/",
 };
+
+function getFileName(str) {
+    return str.split('\\').pop().split('/').pop();
+}
 
 function runEmbeddedScripts() {
   console.log("preloading!!!");

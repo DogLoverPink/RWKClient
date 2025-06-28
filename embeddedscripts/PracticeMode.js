@@ -54,15 +54,56 @@ window.electronAPI.getIndexDBFile((event, fileName, ipcCallbackName) => {
         allKeysRequest.onsuccess = function () {
             const result = allKeysRequest.result;
             if (result) {
-               window.electronAPI.sendCustomIPC(ipcCallbackName, result);
+                window.electronAPI.sendCustomIPC(ipcCallbackName, result);
             } else {
-                console.log("No data found for the key");
+                console.log("No data found for the key: " + fileName);
+                window.electronAPI.sendCustomIPC(ipcCallbackName, result);
             }
         };
         allKeysRequest.onerror = function (e) {
             console.error("Failed to list keys:", e);
         };
 
+    }
+});
+
+window.electronAPI.writeLevelFile((event, filePath, levelContents, timestamp = new Date(), mode = 33206, practiceLevelID) => {
+    console.log("Trying to copy to:" + filePath);
+    console.log("Trying to copy A level: " + levelContents);
+    var dbRequest = indexedDB.open("/RAPTISOFT_SANDBOX", 21);
+    dbRequest.onsuccess = function (event) {
+        var db = event.target.result;
+
+        var request = db.transaction(["FILE_DATA"], "readwrite").objectStore("FILE_DATA").put(
+            {
+                timestamp: timestamp,
+                mode: mode,
+                contents: levelContents
+            },
+            filePath);
+
+        request.onsuccess = function () {
+            console.log("Practice ending! Reloading");
+            setTimeout(() => {
+                window.electronAPI.getRWKURL().then(url => {
+                    if (practiceLevelID) {
+                        const fullURL = url + "?go=" + practiceLevelID;
+                        console.log(fullURL);
+                        window.electronAPI.printToAppConsole(fullURL);
+                        window.location.replace(fullURL);
+                    } else {
+                        window.location.replace(url)
+                    }
+                });
+            }, 250);
+        };
+
+        request.onerror = function (event) {
+            console.error("Error storing Uint8Array data: ", event.target.error);
+        };
+    };
+    dbRequest.onerror = function (e) {
+        console.error(e);
     }
 });
 
