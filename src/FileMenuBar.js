@@ -1,53 +1,55 @@
 const path = require('path');
 const fs = require('fs');
 const storage = require('./StaticMembers.js');
-const { ipcMain } = require('electron');
+const { ipcMain, ipcRenderer } = require('electron');
 const levelThing = require("./level.js");
-const { dialog} = require('electron');
+const { dialog } = require('electron');
 const prompt = require('electron-prompt');
+const betterprompt = require('custom-electron-prompt')
 
 function promptForFileName() {
-    prompt({
+  prompt({
     title: 'Choose File To Download',
     label: 'URL:',
     value: '/RAPTISOFT_SANDBOX/RWK/',
     inputAttrs: {
-        type: 'text'
+      type: 'text'
     },
     width: 500,
     type: 'input'
-})
-.then((r) => {
-    if(r === null) {
+  })
+    .then((r) => {
+      if (r === null) {
         console.log('user cancelled');
-    } else {
+      } else {
         storage.window.webContents.send('downloadIndexDBFile', r);
-    }
-})
-.catch(console.error);
-  }
+      }
+    })
+    .catch(console.error);
+}
 
-  function promptForFileNameList() {
-    prompt({
+function promptForFileNameList() {
+  prompt({
     title: 'Choose File To Download',
     label: 'URL:',
     inputAttrs: {
-        type: 'text'
+      type: 'text'
     },
     selectOptions: fileList,
+    customStylesheet: "css/darkmode.css",
     width: 500,
     type: 'select'
-})
-.then((r) => {
-    if(r === null) {
+  })
+    .then((r) => {
+      if (r === null) {
         console.log('user cancelled');
-    } else {
-      console.log(typeof r+": "+[r]);
+      } else {
+        console.log(typeof r + ": " + [r]);
         storage.window.webContents.send('downloadIndexDBFile', fileList[r]);
-    }
-})
-.catch(console.error);
-  }
+      }
+    })
+    .catch(console.error);
+}
 
 let fileList = [];
 
@@ -73,8 +75,62 @@ function getLevelSaves(name) {
 }
 
 
+function importFile() {
+  betterprompt({
+    title: 'Import File',
+    label: 'Path & Name to Import as',
+    value: '/RAPTISOFT_SANDBOX/RWK/',
+    type: "multiInput",
+    multiInputOptions:
+      [
+        {
+          inputAttrs:
+          {
+            type: "text",
+            required: true,
+            placeholder: "email"
+          }
+        },
+        {
+          inputAttrs:
+          {
+            type: "file",
+            // placeholder: "password"
+          }
+        },
+      ],
+    // customStylesheet: "dark",
+    button:
+    {
+      label: "Autofill",
+      click: () => {
+        
+      },
+      attrs:
+      {
+        abc: 'xyz'
+      }
+    },
+    width: 300,
+    height: 225,
+  }).then(data => {
+    console.dir(data);
+  });
+}
+
+ipcMain.handle('show-open-test', async () => {
+  console.log("TEST!!");
+});
+
+ipcMain.handle('show-open-dialog', () => {
+  const result = dialog.showOpenDialogSync({ properties: ['openFile'] });
+  return result;
+});
+
+
 module.exports = {
   getLevelSaves,
   downloadFile,
-  downloadFileList
+  downloadFileList,
+  importFile
 };
