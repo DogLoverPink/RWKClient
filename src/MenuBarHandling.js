@@ -1,13 +1,10 @@
 const { printLevelHash, printSavedLevelNames, copyCurrentLevel } = require("./LevelMenuBar.js");
 const {importFile, deleteFileList, getLevelSaves, downloadFile, downloadFileList} = require("./FileMenuBar.js");
-const {getCurrentLevelId, startPracticeMode, endPracticeMode, createCheckpoint, restartFromCheckpoint} = require("./PracticeMenuBar.js");
+const {getCurrentLevelId, startPracticeMode, endPracticeMode, createCheckpoint, restartFromCheckpoint, openPracticeHelpMenu} = require("./PracticeMenuBar.js");
 const path = require('path');
 const storage = require('./StaticMembers.js');
 const { ipcMain} = require('electron');
 
-function test() {
-    console.log("rgdfgdfgdfg");
-}
 
 function populateSavedLevelNames() {
     printSavedLevelNames.apply();
@@ -53,6 +50,7 @@ function createMenuToolBar() {
                 { label: 'End Practice', click: endPracticeMode },
                 { label: 'Get Current Level ID', click: getCurrentLevelId },
                 { type: 'separator' },
+                { label: 'Help', click: openPracticeHelpMenu },
             ],
         },
         {

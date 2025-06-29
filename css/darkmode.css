@@ -5,7 +5,8 @@ body {
 }
 
 #label {
-  text-align: center;
+  text-align: left;
+  text-wrap: wrap;
 }
 
 #container {
@@ -17,6 +18,12 @@ body {
   border: 1px solid rgba(80, 0, 0, 0.4);
   overflow: hidden;
 }
+
+div {
+  word-wrap: break-word;
+  text-wrap: wrap;
+}
+
 
 #data,
 .keybindData {

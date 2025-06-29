@@ -3,10 +3,11 @@ const { ElectronBlocker } = require('@cliqz/adblocker-electron');
 const fetch = require('cross-fetch');
 const path = require('path');
 const fs = require('fs');
-const menuBar = require("./src/MenuBarHandling.js");
 const storage = require('./src/StaticMembers.js');
 const Store = require('electron-store');
 const store = new (Store.default || Store)();
+storage.app = app;
+const menuBar = require("./src/MenuBarHandling.js");
 
 if (!store.has("browserStorageLocation")) {
     store.set("browserStorageLocation", path.join(app.getPath('userData'), 'RWKClientStorage'));
@@ -20,7 +21,6 @@ const clientFileStorageFolder = path.join(storage.browserSaveLocation, 'RWKClien
 var win;
 app.setPath('userData', storage.browserSaveLocation);
 
-storage.app = app;
 storage.clientFileStorageFolder = clientFileStorageFolder;
 
 if (!fs.existsSync(clientFileStorageFolder)) {
@@ -52,6 +52,7 @@ app.whenReady().then(async () => {
 
     win.loadURL(storage.RWKURL);
 });
+
 
 ipcMain.handle('get-rwk-url', () => storage.RWKURL);
 

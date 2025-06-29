@@ -4,7 +4,7 @@ const storage = require('./StaticMembers.js');
 const { ipcMain } = require('electron');
 const levelThing = require("./level.js");
 const { dialog } = require('electron');
-const prompt = require('electron-prompt');
+const betterprompt = require('custom-electron-prompt')
 
 function getCurrentLevelId() {
   // storage.window.webContents.send('getIndexDBFile', "/RAPTISOFT_SANDBOX/RWK/MMRESUME-95586.sav", "printCurrentLevelId");
@@ -89,11 +89,6 @@ ipcMain.on("beginPracticeModeFileSave", (event, data) => {
   }
   console.log(data.contents.length);
   console.log(data.timestamp);
-  if (data.contents.length == storage.persistantStorage.get("lastPracticeSaveLength")) {
-    dialog.showErrorBox(title = "Save File Stale", content = "The save file for this level exists, but is stale.\n" +
-      "Progress would be lost if practice started. Either quit/rejoin, die or play more of the level and try again");
-    return
-  }
   if (storage.persistantStorage.get("isCurrentlyPracticing")) {
     dialog.showErrorBox(title = "Already Practing!", content = "You're already practicing " + storage.persistantStorage.get("practiceFileName"));
     return
@@ -122,13 +117,31 @@ ipcMain.on("beginPracticeModeFileSave", (event, data) => {
   });
 });
 
+let hasRegistered = false;
+
 ipcMain.on('preload-finished', () => {
   const practiceStorage = path.join(storage.clientFileStorageFolder, 'SavedPracticeModeLevels');
 
   if (!fs.existsSync(practiceStorage)) {
     fs.mkdirSync(practiceStorage, { recursive: true });
   }
+  if (!hasRegistered) {
+    registerWindowCloseListener();
+    hasRegistered = true;
+  }
 });
+
+function registerWindowCloseListener() {
+  storage.window.on("close", (event) => {
+    if (storage.persistantStorage.get("isCurrentlyPracticing") == true) {
+      event.preventDefault();
+      endPracticeMode();
+      setTimeout(() => {
+        storage.window.close()
+      }, 500)
+    }
+  });
+}
 
 function endPracticeMode() {
   if (!storage.persistantStorage.get("isCurrentlyPracticing")) {
@@ -142,6 +155,7 @@ function endPracticeMode() {
   writeLevel(outputPath);
   storage.persistantStorage.set("isCurrentlyPracticing", false);
 }
+
 
 function writeLevel(outputPath) {
   if (fs.existsSync(outputPath)) {
@@ -180,6 +194,38 @@ function getIdFromRecentLevelsFile(recentLevelsFile) {
   return id;
 }
 
+function openPracticeHelpMenu() {
+  betterprompt({
+    title: 'How to: Practice',
+    useHtmlLabel: true,
+    label: `
+    Disclaimer: Practice mode is meant for practice only. While I can't actually stop you, I'd hope that you use practice mode for practicing tough sections, and not winning the level
+    <br>To use:
+    <br>1. For Best results get to good spot, and quit and rejoin your level
+    <br>2. Click "Start Practice"
+    <br>3. (Optional) While practicing, you may place checkpoints, which will update the spot you'll spawn when restarting a practice. Always quit and rejoin before placing one for best results!
+    <br>4. Click "Restart from last checkpoint" to travel back in time to your last checkpoint
+    <br>5. When done practicing, click "end practice," this will bring you back to where you started your practice
+    <br>TIP: Nothing you do while practicing (should) affect your real save. You can restart the level, destroy acid blocks, collect powerups, or any other irreversible action, without risk of harming your real save
+    `,
+    type: "multiInput",
+    alwaysOnTop: true,
+    multiInputOptions:
+      [
+        {
+          inputAttrs:
+          {
+            type: "hidden",
+          }
+        },
+      ],
+    customStylesheet: "css/darkmode.css",
+    width: 600,
+    height: 450,
+    resizable: true
+  });
+}
+
 
 module.exports = {
   getCurrentLevelId,
@@ -187,4 +233,5 @@ module.exports = {
   endPracticeMode,
   createCheckpoint,
   restartFromCheckpoint,
+  openPracticeHelpMenu,
 };

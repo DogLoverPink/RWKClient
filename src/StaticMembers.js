@@ -38,5 +38,4 @@ function runEmbeddedScripts() {
   } catch (e) {
     console.error(e);
   }
-
 }
