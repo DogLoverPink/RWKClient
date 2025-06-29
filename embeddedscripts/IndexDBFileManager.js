@@ -75,6 +75,9 @@ window.electronAPI.deleteIndexDBFile((event, fileName) => {
             const result = allKeysRequest.result;
             if (!result) {
                 console.log("sucessfully deleted " + fileName);
+                window.electronAPI.getRWKURL().then(url => {
+                    window.location.replace(url)
+                });
             } else {
                 console.log("Couldn't delete: " + fileName);
             }

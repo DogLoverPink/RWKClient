@@ -15,6 +15,7 @@ function promptForFileName() {
     inputAttrs: {
       type: 'text'
     },
+    customStylesheet: "css/darkmode.css",
     width: 500,
     type: 'input'
   })
@@ -55,7 +56,7 @@ function promptForFileNameList() {
 function promptForDeletionFileNameList() {
   console.log("Priomoting")
   prompt({
-    title: 'Choose File To Download',
+    title: 'Choose File To Delete',
     label: 'URL:',
     inputAttrs: {
       type: 'text'
@@ -208,5 +209,5 @@ module.exports = {
   downloadFile,
   downloadFileList,
   importFile,
-  deleteFileList
+  deleteFileList,
 };

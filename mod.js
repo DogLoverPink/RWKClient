@@ -4,11 +4,21 @@ const fetch = require('cross-fetch');
 const path = require('path');
 const fs = require('fs');
 const menuBar = require("./src/MenuBarHandling.js");
-const browserDataPath = path.join(app.getPath('userData'), 'RWKClientStorage');
-const clientFileStorageFolder = path.join(browserDataPath, 'RWKClientFileStorage');
 const storage = require('./src/StaticMembers.js');
+const Store = require('electron-store');
+const store = new (Store.default || Store)();
+
+if (!store.has("browserStorageLocation")) {
+    store.set("browserStorageLocation", path.join(app.getPath('userData'), 'RWKClientStorage'));
+} 
+storage.browserSaveLocation = store.get("browserStorageLocation");
+
+const clientFileStorageFolder = path.join(storage.browserSaveLocation, 'RWKClientFileStorage');
+
+
+
 var win;
-app.setPath('userData', browserDataPath);
+app.setPath('userData', storage.browserSaveLocation);
 
 storage.app = app;
 storage.clientFileStorageFolder = clientFileStorageFolder;

@@ -14,6 +14,7 @@ module.exports = {
   getFileName,
   RWKURL: "https://www.robotwantskitty.com/web/",
   // RWKURL: "http://127.0.0.1:8080/",
+  browserSaveLocation: null,
 };
 
 function getFileName(str) {

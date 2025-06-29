@@ -58,9 +58,9 @@ ipcMain.on("createPracticeModeCheckpoint", (event, data) => {
   }
   console.log(data.contents.length);
   console.log(data.timestamp);
-  if (data.timestamp == storage.persistantStorage.get("lastPracticeTimeStamp")) {
+  if (data.contents.length == storage.persistantStorage.get("lastPracticeSaveLength")) {
     dialog.showErrorBox(title = "Save File Stale", content = "The save file for this level exists, but is stale.\n" +
-      "Progress would be lost if practice started. Either quit/rejoin, die or play more of the level and try again");
+      "This checkpoint would be the same as your last one, please quit and rejoin or try again!");
     return
   }
   const practiceStorage = path.join(storage.clientFileStorageFolder, 'SavedPracticeModeLevels');
@@ -72,7 +72,7 @@ ipcMain.on("createPracticeModeCheckpoint", (event, data) => {
 
   outputPath = path.join(practiceStorage, fileName + ".PRACTICESTART.json");
   fs.writeFileSync(outputPath, JSON.stringify(fileObject, null, 2));
-  storage.persistantStorage.set("lastPracticeTimeStamp", data.timestamp);
+  storage.persistantStorage.set("lastPracticeSaveLength", data.contents.length);
   dialog.showMessageBox(options = {
     type: 'info',
     buttons: ['Great!'],
@@ -89,7 +89,7 @@ ipcMain.on("beginPracticeModeFileSave", (event, data) => {
   }
   console.log(data.contents.length);
   console.log(data.timestamp);
-  if (data.timestamp == storage.persistantStorage.get("lastPracticeTimeStamp")) {
+  if (data.contents.length == storage.persistantStorage.get("lastPracticeSaveLength")) {
     dialog.showErrorBox(title = "Save File Stale", content = "The save file for this level exists, but is stale.\n" +
       "Progress would be lost if practice started. Either quit/rejoin, die or play more of the level and try again");
     return
@@ -113,7 +113,7 @@ ipcMain.on("beginPracticeModeFileSave", (event, data) => {
   fs.writeFileSync(outputPath, JSON.stringify(fileObject, null, 2));
   console.log("Setting isPracticing to true! ");
   storage.persistantStorage.set("isCurrentlyPracticing", true);
-  storage.persistantStorage.set("lastPracticeTimeStamp", data.timestamp);
+  storage.persistantStorage.set("lastPracticeSaveLength", data.contents.length);
   dialog.showMessageBox(options = {
     type: 'info',
     buttons: ['Great!'],
