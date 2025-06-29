@@ -1,4 +1,4 @@
-const { app, Menu, BrowserWindow, ipcMain, session } = require('electron');
+const { app, Menu, BrowserWindow, ipcMain, session, dialog } = require('electron');
 const { ElectronBlocker } = require('@cliqz/adblocker-electron');
 const fetch = require('cross-fetch');
 const path = require('path');
@@ -23,7 +23,9 @@ app.setPath('userData', storage.browserSaveLocation);
 
 storage.clientFileStorageFolder = clientFileStorageFolder;
 
-if (!fs.existsSync(clientFileStorageFolder)) {
+const isProbablyFirstTimeBootUp = !fs.existsSync(clientFileStorageFolder);
+
+if (isProbablyFirstTimeBootUp) {
     fs.mkdirSync(clientFileStorageFolder, { recursive: true });
 }
 
@@ -60,6 +62,14 @@ ipcMain.handle('get-rwk-url', () => storage.RWKURL);
 
 ipcMain.on('preload-finished', () => {
     console.log("finished poreload");
+    if (!store.has("Has-RWKClient-BeenOpened") || isProbablyFirstTimeBootUp) {
+        dialog.showMessageBox(options = {title: "Welcome!", message:"The client has some first-time startup to do.", detail:"Please wait a few seconds, then click OK (app will close)"})
+        .then(()=> {
+            win.close();
+            store.set("Has-RWKClient-BeenOpened", true)
+        });
+        return;
+    }
     storage.runEmbeddedScripts();
     menuBar.populateSavedLevelNames();
 });

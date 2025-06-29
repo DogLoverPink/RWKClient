@@ -1,13 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 const storage = require('./StaticMembers.js');
-const { ipcMain} = require('electron');
+const { ipcMain, dialog} = require('electron');
 const levelThing = require("./level.js");
 
-function printLevelHash() {
-    console.log("test");
-    storage.window.webContents.send('getLevelHash', null, true, "printMessage");
-}
 
 function printSavedLevelNames() {
     try {
@@ -20,8 +16,10 @@ function printSavedLevelNames() {
 
 }
 
+let levelNames = [];
+let areThereAnyLevels = false;
+
 ipcMain.on("updateUserSavedLevelsList", (event, data) => {
-    let levelNames;
     levelNames = JSON.parse(data);
     levelNames = levelNames.map(levelName => {
         levelName = levelName.split('\/').pop().split(".")[0];
@@ -31,8 +29,11 @@ ipcMain.on("updateUserSavedLevelsList", (event, data) => {
     updateCopyLevelMenu(levelNames);
 });
 
+
 function updateCopyLevelMenu(newLevels) {
   levelNames = newLevels;
+  console.log(levelNames.length);
+  areThereAnyLevels = levelNames.length > 0;
 
   const copyLevelSubmenu = levelNames.map(levelName => ({
     label: levelName,
@@ -52,12 +53,20 @@ function updateCopyLevelMenu(newLevels) {
 }
 
 
+
 function duplicateLevel(name) {
     console.log("Copying level:", name);
     storage.window.webContents.send('getLevelHash', name, false, "duplicateNamedLevel");
 }
 
 function copyCurrentLevel() {
+  if (!areThereAnyLevels) {
+      dialog.showErrorBox("Error!", `You need at least 1 created level in your makermall for this to work!
+        \n(It doesn't need to have any content or be uploaded, it just needs to exist)
+        \nDon't ask me why man, it's just how it works
+        \n(Also, make sure to do Level -> Refresh Known Levels after you create it)`)
+      return;
+    }
   storage.window.webContents.send('getLevelHash', null, true, "duplicateNamedLevel");
 }
 
@@ -89,7 +98,6 @@ function incrementString(input) {
 }
 
 module.exports = {
-    printLevelHash,
     printSavedLevelNames,
     copyCurrentLevel,
 };

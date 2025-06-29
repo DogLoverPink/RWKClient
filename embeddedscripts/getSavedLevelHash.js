@@ -15,8 +15,7 @@ window.electronAPI.getLevelHash((event, levelName, getCurrentLevel, ipcCallbackN
         console.log("Halfway HASH REQUEST");
         request.onsuccess = function () {
             if (request.result) {
-                console.log("Put this into a .kitty.b64:", uint8ArrayToBase64(request.result.
-                    contents));
+                console.log("Put this into a .kitty.b64:", uint8ArrayToBase64(request.result.contents));
                 // window.electronAPI.printToAppConsole(uint8ArrayToBase64(request.result.contents));
                 window.electronAPI.sendCustomIPC(ipcCallbackName, uint8ArrayToBase64(request.result.contents));
             } else {

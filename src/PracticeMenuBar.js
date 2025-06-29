@@ -54,14 +54,14 @@ ipcMain.on("createPracticeModeCheckpoint", (event, data) => {
   if (!data) {
     dialog.showErrorBox(title = "No Save File", content = "The save file for this level does not exist yet.\n" +
       "Please either wait and play more, or quit and rejoin, then try again!");
-    return
+    return;
   }
   console.log(data.contents.length);
   console.log(data.timestamp);
   if (data.contents.length == storage.persistantStorage.get("lastPracticeSaveLength")) {
     dialog.showErrorBox(title = "Save File Stale", content = "The save file for this level exists, but is stale.\n" +
       "This checkpoint would be the same as your last one, please quit and rejoin or try again!");
-    return
+    return;
   }
   const practiceStorage = path.join(storage.clientFileStorageFolder, 'SavedPracticeModeLevels');
   const fileObject = {
@@ -85,13 +85,13 @@ ipcMain.on("beginPracticeModeFileSave", (event, data) => {
   if (!data) {
     dialog.showErrorBox(title = "No Save File", content = "The save file for this level does not exist yet.\n" +
       "Please either wait and play more, or quit and rejoin, then try again!");
-    return
+    return;
   }
   console.log(data.contents.length);
   console.log(data.timestamp);
   if (storage.persistantStorage.get("isCurrentlyPracticing")) {
     dialog.showErrorBox(title = "Already Practing!", content = "You're already practicing " + storage.persistantStorage.get("practiceFileName"));
-    return
+    return;
   }
   const practiceStorage = path.join(storage.clientFileStorageFolder, 'SavedPracticeModeLevels');
   const fileObject = {
