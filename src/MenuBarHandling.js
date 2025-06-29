@@ -1,5 +1,5 @@
 const { printLevelHash, printSavedLevelNames, copyCurrentLevel } = require("./LevelMenuBar.js");
-const {importFile, getLevelSaves, downloadFile, downloadFileList} = require("./FileMenuBar.js");
+const {importFile, deleteFileList, getLevelSaves, downloadFile, downloadFileList} = require("./FileMenuBar.js");
 const {getCurrentLevelId, startPracticeMode, endPracticeMode, createCheckpoint, restartFromCheckpoint} = require("./PracticeMenuBar.js");
 const path = require('path');
 const storage = require('./StaticMembers.js');
@@ -21,6 +21,7 @@ function createMenuToolBar() {
                 { label: 'Import File', click: importFile },
                 { label: 'Export File', click: downloadFile },
                 { label: 'Export File (List)', click: downloadFileList },
+                { label: 'Delete File (List)', click: deleteFileList },
                 { label: 'Print File List', click: getLevelSaves },
                 { type: 'separator' },
                 { label: 'Exit', role: 'quit' },

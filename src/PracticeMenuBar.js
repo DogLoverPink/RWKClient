@@ -186,5 +186,5 @@ module.exports = {
   startPracticeMode,
   endPracticeMode,
   createCheckpoint,
-  restartFromCheckpoint
+  restartFromCheckpoint,
 };

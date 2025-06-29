@@ -17,6 +17,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   downloadIndexDBFile: (callback, fileName) => ipcRenderer.on("downloadIndexDBFile", callback, fileName),
   getIndexDBFile: (callback, fileName, ipcCallbackName) => ipcRenderer.on("getIndexDBFile", callback, fileName,ipcCallbackName),
   writeLevelFile: (callback, filePath, levelContents, timestamp, mode, practiceLevelID) => ipcRenderer.on("writeLevelFile", callback, filePath, levelContents, timestamp, mode, practiceLevelID),
+  writeIndexDBFile: (callback, filePath, levelContents, timestamp, mode, reload) => ipcRenderer.on("writeIndexDBFile", callback, filePath, levelContents, timestamp, mode, reload),
+  deleteIndexDBFile: (callback, fileName) => ipcRenderer.on("deleteIndexDBFile", callback, fileName),
   getRWKURL: () => ipcRenderer.invoke('get-rwk-url')
 });
 

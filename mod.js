@@ -35,7 +35,7 @@ app.whenReady().then(async () => {
         }
     });
     storage.window = win;
-    
+
 
     storage.menu = Menu;
     menuBar.createMenuToolBar();
@@ -49,8 +49,8 @@ ipcMain.handle('get-rwk-url', () => storage.RWKURL);
 
 ipcMain.on('preload-finished', () => {
     console.log("finished poreload");
-  storage.runEmbeddedScripts();
-  menuBar.populateSavedLevelNames();
+    storage.runEmbeddedScripts();
+    menuBar.populateSavedLevelNames();
 });
 
 

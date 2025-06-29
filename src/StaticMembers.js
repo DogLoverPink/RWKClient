@@ -23,10 +23,10 @@ function getFileName(str) {
 function runEmbeddedScripts() {
   console.log("preloading!!!");
   let scriptsToPreRun = [
-    // "../embeddedscripts/level.js",
     "../embeddedscripts/DuplicateSavedLevel.js",
     "../embeddedscripts/getSavedLevelHash.js",
     "../embeddedscripts/PracticeMode.js",
+    "../embeddedscripts/IndexDBFileManager.js"
   ];
   try {
     for (let script of scriptsToPreRun) {
