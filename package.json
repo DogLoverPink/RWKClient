@@ -1,13 +1,15 @@
 {
-  "name": "rwkpuppeteer",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "rwkclient",
+  "version": "1.0.1",
+  "description": "A desktop client for Robot Wants Kitty, adding support for file & save manipulation, practice mode, and a mrmasterplan's 3rd party editor integration",
+  "main": "mod.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "electron-builder",
+    "package-win": "electron-packager . RWKClient --platform=win32 --arch=x64 --out=dist --overwrite"
   },
   "keywords": [],
-  "author": "",
+  "author": "DogLoverPink",
   "license": "ISC",
   "dependencies": {
     "@cliqz/adblocker-electron": "^1.34.0",
@@ -17,10 +19,26 @@
     "cross-fetch": "^4.1.0",
     "custom-electron-prompt": "^1.5.8",
     "electron-prompt": "^1.7.0",
-    "electron-store": "^10.1.0",
-    "puppeteer": "^24.11.0"
+    "electron-store": "^10.1.0"
   },
   "devDependencies": {
-    "electron": "^37.1.0"
+    "electron": "^37.1.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "asar": true,
+    "appId": "com.dogloverpink",
+    "productName": "RWKClient",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ]
+    }
   }
 }

@@ -7,6 +7,8 @@ const { dialog } = require('electron');
 const prompt = require('electron-prompt');
 const betterprompt = require('custom-electron-prompt')
 
+const darkCssPath = path.join(__dirname, '../css', 'darkmode.css');
+
 function promptForFileName() {
   prompt({
     title: 'Choose File To Download',
@@ -15,7 +17,7 @@ function promptForFileName() {
     inputAttrs: {
       type: 'text'
     },
-    customStylesheet: "css/darkmode.css",
+    customStylesheet: darkCssPath,
     width: 500,
     type: 'input'
   })
@@ -38,7 +40,7 @@ function promptForFileNameList() {
       type: 'text'
     },
     selectOptions: fileList,
-    customStylesheet: "css/darkmode.css",
+    customStylesheet: darkCssPath,
     width: 500,
     type: 'select'
   })
@@ -62,7 +64,7 @@ function promptForDeletionFileNameList() {
       type: 'text'
     },
     selectOptions: fileList,
-    customStylesheet: "css/darkmode.css",
+    customStylesheet: darkCssPath,
     width: 500,
     type: 'select'
   })

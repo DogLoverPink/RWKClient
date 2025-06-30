@@ -194,6 +194,8 @@ function getIdFromRecentLevelsFile(recentLevelsFile) {
   return id;
 }
 
+const darkCssPath = path.join(__dirname, '../css', 'darkmode.css');
+
 function openPracticeHelpMenu() {
   betterprompt({
     title: 'How to: Practice',
@@ -219,7 +221,7 @@ function openPracticeHelpMenu() {
           }
         },
       ],
-    customStylesheet: "css/darkmode.css",
+    customStylesheet: darkCssPath,
     width: 600,
     height: 450,
     resizable: true
