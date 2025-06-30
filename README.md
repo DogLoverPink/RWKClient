@@ -2,6 +2,7 @@
 # RWKClient
 
 A desktop client for Robot Wants Kitty, adding support for file & save manipulation, practice mode, and a [mrmasterplan's 3rd party editor](https://github.com/mrmasterplan/rwklevelfiles) integration.
+![image](https://github.com/user-attachments/assets/d1de6c6b-4758-4c72-a7de-a25b4c710cc1)
 
 ## Getting Started
 For normal users, you can download the latest release from the [releases](https://github.com/DogLoverPink/RWKClient/releases) tab.
