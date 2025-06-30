@@ -7,7 +7,7 @@ When you select a file from your device, you will be met with a popup that looks
 ![image](https://github.com/user-attachments/assets/c4a8b21a-02e8-4391-9967-9907bb5721b9)
 Either, you can enter in a file path yourself (like `/RAPTISOFT_SANDBOX/RWK/EXTRALEVELS64/test.kitty` for a level file for example), or you can choose to override an existing file from the dropdown. 
 It's an either/or situation, you don't need to fill in both, and the program will use the manually typed input only if the dropdown is set to "Write Path Manually." There's also a button that will copy over the dropdown contents into the manual input box.  
-Also, if you import a file and you notice your game no longer boots, look at the [guide on how to fix it](https://github.com/DogLoverPink/RWKClient/new/main#help-my-screens-black-after-i-deletedimported-a-file)
+Also, if you import a file and you notice your game no longer boots, look at the [guide on how to fix it](https://github.com/DogLoverPink/RWKClient/blob/main/docs/features.md#help-my-screens-black-after-i-deletedimported-a-file)
 
 ### Export File
 Here, you can export a file from the RWK file database. This is for if you want to enter the path manually, which unless you know what you're doing, is probably a no, use **Export File (List)** for a better experience
